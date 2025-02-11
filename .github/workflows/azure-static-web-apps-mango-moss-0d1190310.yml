@@ -28,9 +28,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: mi-vue-app
 
       - name: Build Vue App
         run: npm run build
+        working-directory: mi-vue-app
 
       - name: Deploy to Azure Static Web Apps
         id: deploy
@@ -39,9 +41,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_MOSS_0D1190310 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Token para integración con GitHub
           action: "upload"
-          app_location: "/" # Ubicación del código fuente de Vue
+          app_location: "mi-vue-app" # Ubicación del código fuente de Vue
           api_location: "" # Si no usas Azure Functions, deja esto vacío
-          output_location: "dist" # Carpeta donde se genera la build de Vue
+          output_location: "mi-vue-app/dist" # Carpeta donde se genera la build de Vue
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
