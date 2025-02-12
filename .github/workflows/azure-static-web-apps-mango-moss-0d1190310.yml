@@ -43,7 +43,7 @@ jobs:
           action: "upload"
           app_location: "mi-vue-app" # Ubicación del código fuente de Vue
           api_location: "" # Si no usas Azure Functions, deja esto vacío
-          output_location: "mi-vue-app/dist" # Carpeta donde se genera la build de Vue
+          output_location: "dist" # Carpeta donde se genera la build de Vue
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
