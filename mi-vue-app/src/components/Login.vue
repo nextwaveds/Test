@@ -49,19 +49,25 @@
       };
     },
     methods: {
-      async handleLogin() {
-        try {
-          const response = await axios.post("https://tudominio.azurewebsites.net/api/login", {
+    async handleLogin() {
+      try {
+        const response = await axios.post(
+          "https://mibackendazure.azurewebsites.net/api/loginfunction",
+          {
             email: this.email,
             password: this.password,
-          });
-          console.log("Inicio de sesión exitoso", response.data);
-        } catch (error) {
-          this.error = "Error en el inicio de sesión";
-        }
-      },
+          }
+        );
+
+        console.log("Inicio de sesión exitoso", response.data);
+        alert("✅ Login exitoso: " + response.data.message);
+      } catch (error) {
+        console.error("Error en el login:", error.response?.data || error);
+        this.error = "❌ Credenciales incorrectas";
+      }
     },
-  };
+  },
+};
   </script>
   
   <style>
