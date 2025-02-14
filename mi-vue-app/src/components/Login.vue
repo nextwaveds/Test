@@ -10,7 +10,7 @@
             <input
               type="email"
               class="form-control form-control-lg border-0 shadow-sm"
-              placeholder="Correo Electrónico"
+              placeholder="Correo electrónico"
               v-model="email"
               required
             />
@@ -52,10 +52,10 @@
     async handleLogin() {
       try {
         const response = await axios.post(
-          "https://mibackendazure.azurewebsites.net/api/loginfunction",
+          "https://mibackendazure.azurewebsites.net/api/Login",
           {
-            email: this.email,
-            password: this.password,
+            Correo: this.email,
+            Contrasena: this.password,
           }
         );
 
