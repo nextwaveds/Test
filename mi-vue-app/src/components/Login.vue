@@ -38,9 +38,14 @@
   </template>
   
   <script>
+  import { useRouter } from "vue-router";
   import axios from "axios";
   
   export default {
+    setup() {
+    const router = useRouter(); // ✅ Asegurar que Vue Router está disponible
+    return { router };
+  },
     data() {
       return {
         email: "",
@@ -49,21 +54,29 @@
       };
     },
     methods: {
-    async handleLogin() {
+      async handleLogin() {
       try {
-        const response = await axios.post(
-          "https://mibackendazure.azurewebsites.net/api/Login",
-          {
-            Correo: this.email,
-            Contrasena: this.password,
-          }
-        );
+        const response = await axios.post("https://mibackendazure.azurewebsites.net/api/Login", {
+          Correo: this.email, // 🛠 Asegurar que los nombres de los campos coincidan con la API
+          Contrasena: this.password,
+        });
 
-        console.log("Inicio de sesión exitoso", response.data);
-        alert("✅ Login exitoso: " + response.data.message);
+        if (response.data.token) {
+          // ✅ Guardar token y datos del usuario
+          
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data));
+          
+          console.log("Inicio de sesión exitoso", response.data);
+         
+
+          this.$router.push("/home");
+        } else {
+          this.error = "❌ Credenciales incorrectas";
+        }
       } catch (error) {
         console.error("Error en el login:", error.response?.data || error);
-        this.error = "❌ Credenciales incorrectas";
+        this.error = "❌ Credenciales incorrectas o error en el servidor.";
       }
     },
   },
